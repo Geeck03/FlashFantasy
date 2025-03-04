@@ -1,6 +1,49 @@
 import SwiftUI
 
+class DecksManager: ObservableObject {
+    @Published var decks: [Deck] = []
+    private let decksKey = "savedDecks"
+    
+    init() {
+        loadDecks()
+    }
+    
+    func addDeck(name: String, description: String) {
+        let newDeck = Deck(name: name, description: description)
+        decks.append(newDeck)
+        saveDecks()
+    }
+    
+    func removeDeck(at offsets: IndexSet) {
+        decks.remove(atOffsets: offsets)
+        saveDecks()
+    }
+        
+    
+    private func saveDecks() {
+        if let encodedData = try? JSONEncoder().encode(decks) {
+            UserDefaults.standard.set(encodedData, forKey: decksKey)
+        }
+    }
+    
+    private func loadDecks() {
+        if let data = UserDefaults.standard.data(forKey: decksKey),
+           let decodedDecks = try? JSONDecoder().decode([Deck].self, from: data) {
+            self.decks = decodedDecks
+        }
+    }
+}
+
+
+struct Deck: Identifiable, Codable {
+    var id = UUID()
+    var name: String
+    var description: String
+}
+
 struct ContentView: View {
+    @StateObject private var decksManager = DecksManager()
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -19,7 +62,7 @@ struct ContentView: View {
                         .cornerRadius(10)
                 }
                 
-                NavigationLink(destination: CreateCardsView()) {
+                NavigationLink(destination: CreateCardsView(decksManager: decksManager)) {
                     Text("Create Cards")
                         .padding()
                         .background(Color.blue)
@@ -48,17 +91,12 @@ struct StudyView: View {
     }
 }
 
-struct Deck: Identifiable {
-    var id = UUID()
-    var name: String
-    var description: String
-}
-
 struct CreateCardsView: View {
     @State private var cardName: String = ""
     @State private var cardDescription: String = ""
-    @State private var decks: [Deck] = []  
     @State private var isCreatingNewDeck: Bool = false
+    
+    @ObservedObject var decksManager: DecksManager
     
     var body: some View {
         NavigationView {
@@ -80,8 +118,7 @@ struct CreateCardsView: View {
                         
                         Button("Add Deck") {
                             if !cardName.isEmpty && !cardDescription.isEmpty {
-                                let newDeck = Deck(name: cardName, description: cardDescription)
-                                decks.append(newDeck)
+                                decksManager.addDeck(name: cardName, description: cardDescription)
                                 cardName = ""
                                 cardDescription = ""
                                 isCreatingNewDeck = false
@@ -96,15 +133,20 @@ struct CreateCardsView: View {
                     }
                     .padding()
                 } else {
-                    List(decks) { deck in
-                        VStack(alignment: .leading) {
-                            Text(deck.name)
-                                .font(.headline)
-                            Text(deck.description)
-                                .font(.subheadline)
-                                .foregroundColor(.gray)
+                    List {
+                        ForEach(decksManager.decks) { deck in
+                            VStack(alignment: .leading) {
+                                Text(deck.name)
+                                    .font(.headline)
+                                Text(deck.description)
+                                    .font(.subheadline)
+                                    .foregroundColor(.gray)
+                            }
+                            .padding(.vertical, 5)
                         }
-                        .padding(.vertical, 5)
+                        .onDelete { indexSet in
+                            decksManager.removeDeck(at: indexSet)
+                        }
                     }
                     
                     Spacer()
