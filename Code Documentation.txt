@@ -12,6 +12,6 @@ Features
 
 Bugs/room for improvement
 	* Hitbox of dragon is inconsistent with other objects.
-	* Pipes leave too much room in between and also spawn above the ground.
+	* Pipes leave too much room in between and also spawn above the ground. //Has fixed
 	* No death or game over yet.
 	* Would like to add collectables.
