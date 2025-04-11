@@ -8,7 +8,13 @@
 import SpriteKit
 import GameplayKit
 
-class GameScene: SKScene {
+struct PhysicsCategory {
+    static let bird: UInt32 = 0x1 << 0
+    static let pipe: UInt32 = 0x1 << 1
+    static let ground: UInt32 = 0x1 << 2
+}
+
+class GameScene: SKScene, SKPhysicsContactDelegate{
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
@@ -18,7 +24,11 @@ class GameScene: SKScene {
     var pipeUpTexture = SKTexture()
     var pipeDownTexture = SKTexture()
     var pipesMoveAndRemove = SKAction()
-    
+    var gameOver = false
+    var gameOverLabel: SKLabelNode?
+    let ground = SKNode() //var
+
+
     
      override func didMove(to view: SKView) { //didMoveToView
         
@@ -48,6 +58,17 @@ class GameScene: SKScene {
          sprite.position = CGPointMake(self.size.width/2, sprite.size.height/2.0)
         self.addChild(sprite)
         
+         self.physicsWorld.contactDelegate = self
+
+         bird.physicsBody?.categoryBitMask = PhysicsCategory.bird
+         bird.physicsBody?.contactTestBitMask = PhysicsCategory.pipe | PhysicsCategory.ground
+         bird.physicsBody?.collisionBitMask = PhysicsCategory.pipe | PhysicsCategory.ground
+
+         ground.physicsBody?.categoryBitMask = PhysicsCategory.ground
+         ground.physicsBody?.contactTestBitMask = PhysicsCategory.bird
+         ground.physicsBody?.collisionBitMask = 0
+
+         
         //Pipes
         //Create the Pipes
          pipeUpTexture = SKTexture(imageNamed:"PipeUp")
@@ -66,7 +87,6 @@ class GameScene: SKScene {
          let spawnThenDelayForever = SKAction.repeatForever(spawnThenDelay)
          self.run(spawnThenDelayForever)
          
-         let ground = SKNode() //var
          
          //hitbox position
          ground.position = CGPointMake(0, groundTexture.size().height)
@@ -115,16 +135,14 @@ class GameScene: SKScene {
         
         pipeDown.setScale(pipeScale)
         
-        pipeDown.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeDown.size.width * pipeScale,
-                                                                 height: pipeDown.size.height * pipeScale * 1.25))
+        pipeDown.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeDown.size.width * pipeScale * 0.6, height: pipeDown.size.height * pipeScale * 1.25))
         pipeDown.physicsBody?.isDynamic = false
         pipePair.addChild(pipeDown)
         
         pipeUp.setScale(pipeScale)
         
         //Customize the physical volume by visual scale
-        pipeUp.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width * pipeScale,
-                                                               height: pipeUp.size.height * pipeScale * 1.25))
+        pipeUp.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: pipeUp.size.width * pipeScale * 0.6, height: pipeUp.size.height * pipeScale * 1.25))
         pipeUp.physicsBody?.isDynamic = false
         
         pipeUp.size = CGSize(width: pipeUp.size.width, height: pipeUp.size.height * 1.25)
@@ -136,6 +154,25 @@ class GameScene: SKScene {
         
     }
     
+    func didBegin(_ contact: SKPhysicsContact) {
+        if gameOver { return }
+
+        gameOver = true
+        bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        bird.physicsBody?.isDynamic = false
+
+        self.removeAction(forKey: "pipeSpawn")
+
+        self.enumerateChildNodes(withName: "pipePair") { node, _ in
+            node.removeAllActions()
+        }
+
+        showGameOverLabel()
+
+        self.isPaused = true
+    }
+
+
     
     func touchDown(atPoint pos : CGPoint) {
         
@@ -150,16 +187,37 @@ class GameScene: SKScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        for touch: AnyObject in touches {
-            _ = touch.location(in:self)
-            
-            bird.physicsBody?.velocity = CGVectorMake(0, 0)
-            bird.physicsBody?.applyImpulse(CGVectorMake(0, 150)) //Increase the jump height
-            
-            
+        self.isPaused = false
+
+        if gameOver {
+            restartGame()
+            return
+        }
+
+        bird.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        bird.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 150))
+    }
+
+    func showGameOverLabel() {
+        gameOverLabel = SKLabelNode(text: "Game Over - Tap to Restart")
+        gameOverLabel?.fontName = "Chalkduster"
+        gameOverLabel?.fontSize = 22
+        gameOverLabel?.fontColor = .red
+        gameOverLabel?.position = CGPoint(x: self.frame.midX, y: self.frame.midY)
+        gameOverLabel?.zPosition = 10
+        if let label = gameOverLabel {
+            self.addChild(label)
         }
     }
+
+    func restartGame() {
+        self.removeAllChildren()
+        self.removeAllActions()
+        gameOver = false
+        gameOverLabel = nil
+        didMove(to: self.view!)
+    }
+
     
     override func update(_ currentTime: TimeInterval) {
         
