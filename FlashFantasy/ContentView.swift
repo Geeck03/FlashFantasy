@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 20) {
             Text("Settings")
-                .font(.largeTitle)
+                .font(.custom("Papyrus", size: 48))
                 .fontWeight(.bold)
                 .padding()
         }
@@ -22,6 +22,7 @@ struct ContentView: View {
                Slider(value: $fbg, in: 1...20, step: 1)
                    .padding()
            }
+        .font(.custom("Papyrus", size: 20))
     }
 }
 

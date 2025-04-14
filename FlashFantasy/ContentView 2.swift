@@ -84,10 +84,10 @@ struct Quest: View {
                         HStack {
                             VStack(alignment: .leading) {
                                 Text(note.title)
-                                    .font(.headline)
+                                    .font(.custom("Papyrus", size: 20))
                                     .strikethrough(note.isCompleted, color: .green)
                                 Text(note.content)
-                                    .font(.subheadline)
+                                    .font(.custom("Papyrus", size: 16))
                                     .lineLimit(1)
                             }
                             Spacer()
@@ -98,10 +98,14 @@ struct Quest: View {
                         }
                     }
                 }
-                .onDelete(perform: viewModel.deleteNotes) // Fix for swipe-to-delete
+                .onDelete(perform: viewModel.deleteNotes)
             }
-            .navigationTitle("Quests")
             .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Quests")
+                        .font(.custom("Papyrus", size: 40))
+                        .padding(.top, 20)
+                }
                 ToolbarItem(placement: .navigationBarTrailing) {
                     NavigationLink(destination: AddEditNoteView(viewModel: viewModel)) {
                         Image(systemName: "plus")
@@ -121,22 +125,20 @@ struct NoteDetailView: View {
     var body: some View {
         VStack {
             Text(note.title)
-                .font(.largeTitle)
+                .font(.custom("Papyrus", size: 28))
                 .bold()
                 .strikethrough(note.isCompleted, color: .black)
                 .padding(.bottom, 10)
                 .padding(.leading, 20)
-                .frame(maxWidth: .infinity, alignment: .leading) // Aligns text left
+                .frame(maxWidth: .infinity, alignment: .leading)
                         
             Text(note.content)
-                .font(.body)
-                .multilineTextAlignment(.leading) // Ensures text aligns left
-                .frame(maxWidth: .infinity, alignment: .leading) // Aligns frame left
+                .font(.custom("Papyrus", size: 20))
+                .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.bottom, 20)
                 .padding(.leading, 20)
 
-                        
-        
             Spacer()
             
             Button(action: {
@@ -147,12 +149,14 @@ struct NoteDetailView: View {
                     .background(note.isCompleted ? Color.orange : Color.green)
                     .foregroundColor(.white)
                     .cornerRadius(8)
+                    .font(.custom("Papyrus", size: 20))
             }
             .padding()
         }
         .navigationBarItems(trailing: Button("Edit") {
             showEditView = true
-        })
+        }
+        .font(.custom("Papyrus", size: 20)))
         .sheet(isPresented: $showEditView) {
             AddEditNoteView(viewModel: viewModel, note: note)
         }
@@ -172,11 +176,17 @@ struct AddEditNoteView: View {
     var body: some View {
         Form {
             TextField("Title", text: $title)
+                .font(.custom("Papyrus", size: 20))
             TextEditor(text: $content)
                 .frame(minHeight: 200)
+                .font(.custom("Papyrus", size: 20))
         }
-        .navigationTitle(note == nil ? "Add Quest" : "Edit Quest")
         .toolbar {
+            ToolbarItem(placement: .principal) {
+                Text(note == nil ? "Add Quest" : "Edit Quest")
+                    .font(.custom("Papyrus", size: 30))
+                    .padding(.top, 30)
+            }
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("Save") {
                     if let note = note {
@@ -186,6 +196,7 @@ struct AddEditNoteView: View {
                     }
                     presentationMode.wrappedValue.dismiss()
                 }
+                .font(.custom("Papyrus", size: 20))
             }
         }
         .onAppear {
@@ -197,10 +208,6 @@ struct AddEditNoteView: View {
     }
 }
 
-
-
-
 #Preview {
     Quest()
 }
-
