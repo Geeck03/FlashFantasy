@@ -17,3 +17,13 @@ struct Flashcard: Identifiable, Codable {
     var interval: Int = 1        // Days until next review
     var nextReviewDate: Date?    // Date when the flashcard should be reviewed again
 }
+
+extension Deck: Hashable {
+    static func == (lhs: Deck, rhs: Deck) -> Bool {
+        lhs.id == rhs.id
+    }
+
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+}

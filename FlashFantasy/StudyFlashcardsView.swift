@@ -3,11 +3,15 @@ import SwiftUI
 
 struct StudyFlashcardsView: View {
     var deck: Deck
-    @ObservedObject var decksManager: DecksManager  // Add this line
+    @ObservedObject var decksManager: DecksManager
     @State private var currentFlashcard: Flashcard?
     @State private var flashcards: [Flashcard]
     @State private var currentIndex: Int = 0
     @State private var showAnswer: Bool = false  // Track whether to show the answer
+    @State private var nextReviewInfo: String? = nil
+    @State private var intervalPreviews: [String: String] = [:]
+
+
     
     init(deck: Deck, decksManager: DecksManager) {
         self.deck = deck
@@ -39,23 +43,23 @@ struct StudyFlashcardsView: View {
                 
                 // Vertical buttons for Easy, Medium, Hard
                 VStack(spacing: 20) {
-                    Button("Easy") {
-                        handleFlashcardDifficulty("Easy")
+                    Button(action: { handleFlashcardDifficulty("Easy") }) {
+                        Text("Easy (\(intervalPreviews["Easy"] ?? ""))")
                     }
                     .buttonStyle(GradientButtonStyle())
-                    .frame(maxWidth: .infinity) // Full width
+                    .frame(maxWidth: .infinity)
                     
-                    Button("Medium") {
-                        handleFlashcardDifficulty("Medium")
+                    Button(action: { handleFlashcardDifficulty("Medium") }) {
+                        Text("Medium (\(intervalPreviews["Medium"] ?? ""))")
                     }
                     .buttonStyle(GradientButtonStyle())
-                    .frame(maxWidth: .infinity) // Full width
+                    .frame(maxWidth: .infinity)
                     
-                    Button("Hard") {
-                        handleFlashcardDifficulty("Hard")
+                    Button(action: { handleFlashcardDifficulty("Hard") }) {
+                        Text("Hard (\(intervalPreviews["Hard"] ?? ""))")
                     }
                     .buttonStyle(GradientButtonStyle())
-                    .frame(maxWidth: .infinity) // Full width
+                    .frame(maxWidth: .infinity)
                 }
                 .padding([.leading, .trailing], 20)
             }
@@ -67,6 +71,46 @@ struct StudyFlashcardsView: View {
         .navigationTitle("Studying: \(deck.name)")
     }
     
+    private func updateIntervalPreviews(for flashcard: Flashcard) {
+        var previews: [String: String] = [:]
+        
+        let difficulties = ["Easy", "Medium", "Hard"]
+        
+        for difficulty in difficulties {
+            var interval = flashcard.interval
+            var ef = flashcard.easeFactor
+            
+            switch difficulty {
+            case "Easy":
+                interval = Int(Double(interval) * 1.3)
+                ef += 0.2
+            case "Medium":
+                ef += 0.1
+            case "Hard":
+                interval = max(1, interval - 1)
+                ef -= 0.1
+            default:
+                break
+            }
+            
+            ef = max(1.3, min(ef, 2.5))
+            
+            // Generate time preview
+            let timeDesc: String
+            if interval < 1 {
+                timeDesc = "+10 mins"
+            } else if interval == 1 {
+                timeDesc = "+1 day"
+            } else {
+                timeDesc = "+\(interval) days"
+            }
+            
+            previews[difficulty] = timeDesc
+        }
+        
+        self.intervalPreviews = previews
+    }
+
     private func handleFlashcardDifficulty(_ difficulty: String) {
         guard let flashcard = currentFlashcard else { return }
         
@@ -80,7 +124,7 @@ struct StudyFlashcardsView: View {
         case "Easy":
             newRepetitions += 1
             newEaseFactor = max(1.3, newEaseFactor + 0.2)  // Increase EF (no higher than 2.5)
-            newInterval = Int(Double(newInterval) * 1.3)   // Increase interval by 30%
+            newInterval = Int(Double(newInterval) * 2.0)   // Increase interval by 200%
         case "Medium":
             newRepetitions += 1
             newEaseFactor = max(1.3, newEaseFactor + 0.1)  // Slightly increase EF
@@ -91,22 +135,20 @@ struct StudyFlashcardsView: View {
         default:
             break
         }
-        
-        // Apply the updated values
+        // Apply updated values to the flashcard
         if let deckIndex = decksManager.decks.firstIndex(where: { $0.id == deck.id }),
            let flashcardIndex = decksManager.decks[deckIndex].flashcards.firstIndex(where: { $0.id == flashcard.id }) {
-            // Update the flashcard
+            // Update the flashcard with the new values
             decksManager.decks[deckIndex].flashcards[flashcardIndex].easeFactor = newEaseFactor
             decksManager.decks[deckIndex].flashcards[flashcardIndex].interval = newInterval
             decksManager.decks[deckIndex].flashcards[flashcardIndex].repetitions = newRepetitions
-            
-            // Schedule the next review date
+
+            // Schedule the next review date based on the updated interval
             let nextReviewDate = Calendar.current.date(byAdding: .day, value: newInterval, to: Date())!
             decksManager.decks[deckIndex].flashcards[flashcardIndex].nextReviewDate = nextReviewDate
-            
-            decksManager.saveDecks()  // Save the updated flashcards
+
+            decksManager.saveDecks()  // Save updated decks
         }
-        
         // Proceed to the next flashcard
         showNextFlashcard()
     }
@@ -114,10 +156,11 @@ struct StudyFlashcardsView: View {
     private func showNextFlashcard() {
         if currentIndex < flashcards.count {
             currentFlashcard = flashcards[currentIndex]
-            showAnswer = false // Reset showAnswer when showing the next flashcard
+            showAnswer = false
+            nextReviewInfo = nil
+            updateIntervalPreviews(for: flashcards[currentIndex])
             currentIndex += 1
         } else {
-            // You finished all flashcards
             print("All flashcards completed!")
         }
     }
