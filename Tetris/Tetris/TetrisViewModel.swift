@@ -92,11 +92,11 @@ class TetrisViewModel: ObservableObject{
         }
     }
     
-    func drop(){
+    /*func drop(){
         while let tetromino = current, isValid(tetromino) {
             moveDown()
         }
-    }
+    }*/
     
     func isValid(_ tetromino: Tetromino) -> Bool{
         for (y, row) in tetromino.blocks.enumerated() {

@@ -21,11 +21,13 @@ struct TetrisView: View {
                     ForEach(0..<viewModel.rows, id: \.self) { y in
                         ForEach(0..<viewModel.cols, id: \.self) { x in
                             Rectangle()
-                                .stroke(Color.gray, lineWidth: 0.5)
+                                .fill(viewModel.grid[y][x] ?? .clear)
+                                .frame(width: blockSize, height: blockSize)
+                                /*.stroke(Color.gray, lineWidth: 0.5)
                                 .background(
                                     (viewModel.grid[y][x] ?? .clear)
                                         .frame(width: blockSize, height: blockSize)
-                                )
+                                )*/
                                 .position(x: CGFloat(x) * blockSize + blockSize / 2, y: CGFloat(y) * blockSize + blockSize / 2)
                         }
                     }
@@ -52,7 +54,7 @@ struct TetrisView: View {
                 Button("🔄"){viewModel.rotate()}
                 Button("▶️"){viewModel.moveRight()}
                 Button("⬇️"){viewModel.moveDown()}
-                Button("⏬"){viewModel.drop()}
+                //Button("⏬"){viewModel.drop()}
             }
             
             HStack(spacing: 20){
