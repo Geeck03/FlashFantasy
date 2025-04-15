@@ -1,0 +1,17 @@
+Group Members - Caden Blust and Ethan Jiang
+
+----------------------------------------------------------------------------------
+
+Entry #1 (3/5/2025)
+
+Features
+	* Flappy dragon jumps when a touch is detected on screen.
+	* Ground positioned correctly and visible.
+	* Pipes show up and are randomized.
+	* Pipes move at the dragon.
+
+Bugs/room for improvement
+	* Hitbox of dragon is inconsistent with other objects.
+	* Pipes leave too much room in between and also spawn above the ground. //Has fixed
+	* No death or game over yet.
+	* Would like to add collectables.
