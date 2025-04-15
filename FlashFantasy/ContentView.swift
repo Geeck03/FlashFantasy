@@ -65,8 +65,23 @@ struct StartPage: View {
                             .padding(.horizontal, 40)
                     }
                     
-                    NavigationLink(destination: QuestView()) {
+                    NavigationLink(destination: Quest()) {
                         Text("Quests")
+                            .font(.custom("Papyrus", size: 24))
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(
+                                LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]),
+                                               startPoint: .leading,
+                                               endPoint: .trailing)
+                            )
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
+                            .padding(.horizontal, 40)
+                    }
+                    
+                    NavigationLink(destination: SettingView()) {
+                        Text("Settings")
                             .font(.custom("Papyrus", size: 24))
                             .frame(maxWidth: .infinity)
                             .padding()
