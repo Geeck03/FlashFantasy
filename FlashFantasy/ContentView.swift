@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  FlashFantasy
-//
-//  Created by Ethan Jiang on 2/18/25.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -16,19 +9,31 @@ struct ContentView: View {
                 .font(.custom("Papyrus", size: 48))
                 .fontWeight(.bold)
                 .padding()
+
+            VStack {
+                Text("Flashcards Between Games: \(Int(fbg))")
+
+                ZStack {
+                    Slider(value: $fbg, in: 1...20, step: 1)
+                        .padding()
+
+                    GeometryReader { geometry in
+                        let sliderWidth = geometry.size.width - 32 // adjust for padding
+                        let knobPosition = (sliderWidth) * CGFloat((fbg - 1) / 19)
+
+                        Text("🐲") // or any emoji/symbol you like
+                            .font(.system(size: 24))
+                            .offset(x: knobPosition)
+                            .padding(.top, 6)
+                    }
+                    .frame(height: 44)
+                }
+            }
+            .font(.custom("Papyrus", size: 20))
         }
-        VStack {
-               Text("Flashcards Between Games: \(Int(fbg))")
-               Slider(value: $fbg, in: 1...20, step: 1)
-                   .padding()
-           }
-        .font(.custom("Papyrus", size: 20))
     }
 }
-
-
 
 #Preview {
     ContentView()
 }
-
