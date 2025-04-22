@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		EEDD66C62D652129003D1D4D /* FlashFantasy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = FlashFantasy.app; path = "/Users/kevinnguyen/Documents/FlashFantasy/build/Debug-iphoneos/FlashFantasy.app"; sourceTree = "<absolute>"; };
+		9D343E732DB81B4100945D4C /* FlashFantasy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FlashFantasy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -33,6 +33,7 @@
 			isa = PBXGroup;
 			children = (
 				EEDD66C82D652129003D1D4D /* FlashFantasy */,
+				9D343E732DB81B4100945D4C /* FlashFantasy.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,7 +59,7 @@
 			packageProductDependencies = (
 			);
 			productName = FlashFantasy;
-			productReference = EEDD66C62D652129003D1D4D /* FlashFantasy.app */;
+			productReference = 9D343E732DB81B4100945D4C /* FlashFantasy.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
