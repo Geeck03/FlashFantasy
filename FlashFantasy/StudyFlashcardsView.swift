@@ -1,4 +1,3 @@
-
 import SwiftUI
 
 struct StudyFlashcardsView: View {
@@ -10,15 +9,14 @@ struct StudyFlashcardsView: View {
     @State private var showAnswer: Bool = false  // Track whether to show the answer
     @State private var nextReviewInfo: String? = nil
     @State private var intervalPreviews: [String: String] = [:]
+    @State private var showFinishScreen: Bool = false 
 
-
-    
     init(deck: Deck, decksManager: DecksManager) {
         self.deck = deck
-        self._decksManager = ObservedObject(wrappedValue: decksManager)  // Initialize the decksManager
+        self._decksManager = ObservedObject(wrappedValue: decksManager)
         self._flashcards = State(initialValue: deck.flashcards.shuffled())
     }
-    
+
     var body: some View {
         VStack {
             if let flashcard = currentFlashcard {
@@ -31,16 +29,16 @@ struct StudyFlashcardsView: View {
                         // Show answer when the user taps the question
                         showAnswer = true
                     }
-                
+
                 // Conditional answer visibility
                 if showAnswer {
                     Text(flashcard.answer)
                         .font(.custom("Papyrus", size: 20))
                         .padding()
                 }
-                
+
                 Spacer()
-                
+
                 // Vertical buttons for Easy, Medium, Hard
                 VStack(spacing: 20) {
                     Button(action: { handleFlashcardDifficulty("Easy") }) {
@@ -48,13 +46,13 @@ struct StudyFlashcardsView: View {
                     }
                     .buttonStyle(GradientButtonStyle())
                     .frame(maxWidth: .infinity)
-                    
+
                     Button(action: { handleFlashcardDifficulty("Medium") }) {
                         Text("Medium (\(intervalPreviews["Medium"] ?? ""))")
                     }
                     .buttonStyle(GradientButtonStyle())
                     .frame(maxWidth: .infinity)
-                    
+
                     Button(action: { handleFlashcardDifficulty("Hard") }) {
                         Text("Hard (\(intervalPreviews["Hard"] ?? ""))")
                     }
@@ -63,23 +61,31 @@ struct StudyFlashcardsView: View {
                 }
                 .padding([.leading, .trailing], 20)
             }
-            
+
         }
         .onAppear {
             showNextFlashcard()
         }
         .navigationTitle("Studying: \(deck.name)")
+        .fullScreenCover(isPresented: $showFinishScreen) {
+            StudyFinishView(onFinish: {
+                currentIndex = 0
+                showNextFlashcard()
+                showAnswer = false
+                showFinishScreen = false
+            })
+        }
     }
-    
+
     private func updateIntervalPreviews(for flashcard: Flashcard) {
         var previews: [String: String] = [:]
-        
+
         let difficulties = ["Easy", "Medium", "Hard"]
-        
+
         for difficulty in difficulties {
             var interval = flashcard.interval
             var ef = flashcard.easeFactor
-            
+
             switch difficulty {
             case "Easy":
                 interval = Int(Double(interval) * 1.3)
@@ -92,9 +98,9 @@ struct StudyFlashcardsView: View {
             default:
                 break
             }
-            
+
             ef = max(1.3, min(ef, 2.5))
-            
+
             // Generate time preview
             let timeDesc: String
             if interval < 1 {
@@ -104,21 +110,21 @@ struct StudyFlashcardsView: View {
             } else {
                 timeDesc = "+\(interval) days"
             }
-            
+
             previews[difficulty] = timeDesc
         }
-        
+
         self.intervalPreviews = previews
     }
 
     private func handleFlashcardDifficulty(_ difficulty: String) {
         guard let flashcard = currentFlashcard else { return }
-        
+
         // Update flashcard's review schedule based on difficulty
         var newEaseFactor = flashcard.easeFactor
         var newInterval = flashcard.interval
         var newRepetitions = flashcard.repetitions
-        
+
         // Adjust ease factor and interval based on difficulty
         switch difficulty {
         case "Easy":
@@ -135,6 +141,7 @@ struct StudyFlashcardsView: View {
         default:
             break
         }
+
         // Apply updated values to the flashcard
         if let deckIndex = decksManager.decks.firstIndex(where: { $0.id == deck.id }),
            let flashcardIndex = decksManager.decks[deckIndex].flashcards.firstIndex(where: { $0.id == flashcard.id }) {
@@ -149,7 +156,8 @@ struct StudyFlashcardsView: View {
 
             decksManager.saveDecks()  // Save updated decks
         }
-        // Proceed to the next flashcard
+
+        // Proceed to the next flashcard or show finish screen if completed
         showNextFlashcard()
     }
 
@@ -161,7 +169,8 @@ struct StudyFlashcardsView: View {
             updateIntervalPreviews(for: flashcards[currentIndex])
             currentIndex += 1
         } else {
-            print("All flashcards completed!")
+            // Show finish screen once all flashcards are completed
+            showFinishScreen = true
         }
     }
 }
