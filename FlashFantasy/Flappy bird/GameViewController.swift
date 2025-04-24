@@ -18,7 +18,6 @@ class GameViewController: UIViewController {
 
     
     func startGame() {
-        gameScene?.setupScene()
-        gameScene?.startSpawningPipes()
-    }
+        
+            }
 }

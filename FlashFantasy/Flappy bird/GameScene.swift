@@ -13,6 +13,7 @@ import GameplayKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var coinCollected = false
+    var gameStarted = false
     var score = 0
     var coins = [SKSpriteNode]()
     var bird = SKSpriteNode()
@@ -32,8 +33,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         physicsWorld.contactDelegate = self
         
-        setupScene()
-        startSpawningPipes()
+        
     }
     
     func setupScene() {
@@ -57,7 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         birdTexture.filteringMode = .nearest
         bird = SKSpriteNode(texture: birdTexture)
         bird.setScale(0.12)
-        bird.position = CGPoint(x: self.frame.size.width * 0.25, y: self.frame.size.height * 0.9)
+        bird.position = CGPoint(x: self.frame.size.width * 0.25, y: self.frame.size.height * 1.3)
         bird.zPosition = 1
         bird.physicsBody = SKPhysicsBody(circleOfRadius: bird.size.height / 2)
         bird.physicsBody?.isDynamic = true
@@ -215,7 +215,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        if isGameOver {
+        if !gameStarted {
+            setupScene()
+            startSpawningPipes()
+            gameStarted = true
             return
         }
         bird.physicsBody?.velocity = CGVectorMake(0, 0)
