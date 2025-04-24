@@ -55,6 +55,7 @@ struct StudyFinishView: View {
             }
 
             .navigationDestination(isPresented: $showFlappy) {
+                FlappyBirdWrapper()
             }
         }
     }

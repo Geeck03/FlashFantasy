@@ -1,40 +1,24 @@
-//
-//  GameViewController.swift
-//  Flappy bird
-//
-//  Created by Blust, Caden on 2/25/25.
-//
-
 import UIKit
 import SpriteKit
-import GameplayKit
 
 class GameViewController: UIViewController {
+    private var gameScene: GameScene?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if let view = self.view as? SKView {
-            let scene = GameScene(size: view.bounds.size)
-            scene.scaleMode = .aspectFill
-            view.presentScene(scene)
+        let skView = SKView(frame: self.view.bounds)
+        self.view = skView
 
-            view.ignoresSiblingOrder = true
-            view.showsFPS = true
-            view.showsNodeCount = true
-        }
+        let scene = GameScene(size: view.bounds.size)
+        scene.scaleMode = .resizeFill
+        gameScene = scene
+        skView.presentScene(scene)
     }
 
-
-    override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
-        if UIDevice.current.userInterfaceIdiom == .phone {
-            return .allButUpsideDown
-        } else {
-            return .all
-        }
-    }
-
-    override var prefersStatusBarHidden: Bool {
-        return true
+    
+    func startGame() {
+        gameScene?.setupScene()
+        gameScene?.startSpawningPipes()
     }
 }

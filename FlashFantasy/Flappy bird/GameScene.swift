@@ -8,6 +8,8 @@
 import SpriteKit
 import GameplayKit
 
+
+
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var coinCollected = false
@@ -201,7 +203,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.removeAction(forKey: "pipeSpawning")
         self.isPaused = true
         
-        gameOverLabel = SKLabelNode(text: "Game Over - Tap Screen to Restart")
+        gameOverLabel = SKLabelNode(text: "Game Over")
         gameOverLabel?.fontName = "Chalkduster"
         gameOverLabel?.fontSize = 18
         gameOverLabel?.fontColor = .red
@@ -214,9 +216,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if isGameOver {
-            gameOverLabel?.removeFromParent()
-            setupScene()
-            startSpawningPipes()
             return
         }
         bird.physicsBody?.velocity = CGVectorMake(0, 0)
