@@ -12,8 +12,7 @@ struct StudyFinishView: View {
     var onFinish: () -> Void
     @State private var showTetris: Bool = false
     @State private var showFlappy: Bool = false
-    @State private var showTetrisButton: Bool = true
-    @State private var showFlappyButton: Bool = true
+    @State private var showButton: Bool = true
     
     var body: some View {
         NavigationStack {
@@ -28,24 +27,23 @@ struct StudyFinishView: View {
 
                 Button("Play Tetris") {
                     showTetris = true
-                    showTetrisButton = false
+                    showButton = false
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(!showTetrisButton)
-                .opacity(showTetrisButton ? 1.0 : 0.5)
+                .disabled(!showButton)
+                .opacity(showButton ? 1.0 : 0.5)
 
                 Button("Play Flappy Bird") {
                     showFlappy = true
-                    showFlappyButton = false
+                    showButton = false
                 }
                 .buttonStyle(.borderedProminent)
-                .disabled(!showFlappyButton)
-                .opacity(showFlappyButton ? 1.0 : 0.5)
+                .disabled(!showButton)
+                .opacity(showButton ? 1.0 : 0.5)
 
                 Button("Go Back") {
                     onFinish()
-                    showFlappyButton = true
-                    showFlappyButton = true
+                    showButton = true
                 }
                 .foregroundColor(.red)
             }
