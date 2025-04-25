@@ -10,10 +10,10 @@ to set study goals while making task completion fun. This app is particulary use
 Overall this app is designed to help users reach their study goals by making recalling information more enjoyable.  
 
 ## Installation/Setup  
-Open github and navigate to the “FlashFantasy” repository 
-Clone the main branch from the repository 
-Activate the simulator to preview the code
-Alternatively, the user may use Xcode and navigate to the “contentView” file and use the functionality of the app. 
+1. Open github and navigate to the “FlashFantasy” repository 
+2. Clone the main branch from the repository 
+3. Activate the simulator to preview the code
+4. Alternatively, the user may use Xcode and navigate to the “contentView” file and use the functionality of the app. 
 
 
 # Usage 
