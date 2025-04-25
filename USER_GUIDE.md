@@ -35,7 +35,7 @@ When a line of blocks is created, the blocks are destroyed and the user’s scor
 upper left corner that returns the user to the studyFlash card page. After the user’s tetrimons reach the top of the screen, the user is given a “game over,” message and is returned 
 to the “play game page.” The option to play other games is grayed out, however, and the user must return to the study flash card page. 
 
-## Flappy Bird
+## Flappy Bird/Flappy Dragon 
 Flappy Dragon starts on a black screen. To start the game, simply tap the screen.
 The goal of the game is to tap the screen to make the bird fly while avoiding the towers coming at you. You can collect coins to add to your score. If you hit a castle, then it is 
 game over. You can exit the game by hitting the back button in the top-left corner.
