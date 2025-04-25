@@ -14,9 +14,9 @@ enum TetrominoType: CaseIterable {
     var color: Color{
         switch self {
         case .I: return .cyan
-        case .O: return .yellow
+        case .O: return .pink
         case .T: return .purple
-        case .L: return .orange
+        case .L: return .black
         case .J: return .green
         case .S: return .blue
         case .Z: return .red
