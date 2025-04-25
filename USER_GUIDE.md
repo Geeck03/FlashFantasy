@@ -1,7 +1,7 @@
 # User guide
 
 
-## FlashFantasy Flashcard app purpose 
+## FlashFantasy a gamified flashcard app 
 A fantasy themed gamified flash card app that allows the user to create and study a deck, create quests (tasks) that can be marked as completed, 
 and prompts the user to play one of two games or continue studying after the user finishes studying a flashcard deck. The flashcard system uses a 
 spaced repetition algorithm to enhance learning. The purpose of the app is to help “gamify” the user's studying routine. With the occasional game being mixed in with the user's studying, 
