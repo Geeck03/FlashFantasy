@@ -13,7 +13,7 @@ Overall this app is designed to help users reach their study goals by making rec
 1. Open github and navigate to the “FlashFantasy” repository 
 2. Clone the main branch from the repository 
 3. Activate the simulator to preview the code
-4. Alternatively, the user may use Xcode and navigate to the “contentView” file and use the functionality of the app. 
+4. Alternatively, the user may use Xcode and navigate to the “contentView” file to test the app's full functionality
 
 
 # Usage 
