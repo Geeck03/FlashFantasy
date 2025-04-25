@@ -16,8 +16,9 @@ Activate the simulator to preview the code
 Alternatively, the user may use Xcode and navigate to the “contentView” file and use the functionality of the app. 
 
 
-## Usage 
-Home Page:
+# Usage 
+
+## Home Page
 The Home Screen of the FlashFantasy app serves as the main hub for creating, viewing, and managing flashcard decks. Designed with a fantasy-themed interface, the screen 
 features a vibrant purple-to-blue gradient background and uses the “Papyrus” font to enhance the magical atmosphere. This screen is where users begin their flashcard journey,
 offering a clear layout and intuitive tools for organizing study materials.
