@@ -16,7 +16,6 @@ struct CapsuleButtonStyle: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-        //.font(.custom("Paypyrus", size: 25))
             .padding(.horizontal,horizontalPadding)
             .padding(.vertical, verticalPadding)
             .background(
