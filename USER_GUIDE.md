@@ -67,7 +67,7 @@ Technical: FlappyDragon and gitHub merging| Contact Information: caden.r.blust@g
 Ethan Jiang| 
 Technical: Flappy Dragon| Contact Information: tian01489@gmail.com 
 
-Richard Moerck: 
+Richard Moerck| 
 Technical: Tetris| Contact Information: bmoerck@yahoo.com
 
 Macie Hocutt| 
