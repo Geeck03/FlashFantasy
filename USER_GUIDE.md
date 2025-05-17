@@ -56,28 +56,22 @@ delete them as needed.
 
 ## Team Members 
 Aramaea Sewell [Team Leader] 
-Technical: GitHub Management, UI for Tetris, general UI polishing. 
-Contact Information: aramaea.marie@gmail.com 
+Technical: GitHub Management, UI for Tetris, general UI polishing.  Contact Information: aramaea.marie@gmail.com 
 
 Priscilla Devadhas| 
-Technical: Settings and Quests functionalities  
-Contact Information: priscilla.devadhas44@gmail.com
+Technical: Settings and Quests functionalities Contact Information: priscilla.devadhas44@gmail.com
 
 Caden Blust| 
-Technical: FlappyDragon and gitHub merging 
-Contact Information: caden.r.blust@gmail.com
+Technical: FlappyDragon and gitHub merging Contact Information: caden.r.blust@gmail.com
 
 Ethan Jiang| 
-Technical: Flappy Dragon 
-Contact Information: tian01489@gmail.com 
+Technical: Flappy Dragon Contact Information: tian01489@gmail.com 
 
 Richard Moerck: 
-Technical: Tetris
-Contact Information: bmoerck@yahoo.com
+Technical: Tetris Contact Information: bmoerck@yahoo.com
 
 Macie Hocutt| 
-Technical: Home page 
-Contact Information: 
+Technical: Home page Contact Information: 
 
 
 ## Technologies Used 
