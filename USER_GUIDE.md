@@ -12,7 +12,7 @@ to set study goals making task completion feel tangible and fun. This app is par
 4. Alternatively, the user may use Xcode and navigate to the “contentView” file to test the app's full functionality
 
 
-# Usage 
+# Features and Credits
 
 ## Home Page
 The Home Screen of the FlashFantasy app serves as the main hub for creating, viewing, and managing flashcard decks. Designed with a fantasy-themed interface, the screen 
@@ -33,7 +33,7 @@ A castle-themed tetris game. The user uses the left, right, and rotate buttons b
 When a line of blocks is created, the blocks are destroyed and the user’s score is incremented and dynamically updated on the top of the screen. There is a back button in the 
 upper left corner that returns the user to the studyFlash card page. After the user’s tetrimons reach the top of the screen, the user is given a “game over,” message and is returned 
 to the “play game page.” The option to play other games is grayed out, however, and the user must return to the study flash card page. 
-**Created by Richard Moerck (backend) and Aramaea Sewell (UI) **
+**Created by Richard Moerck (backend) and Aramaea Sewell (UI)**
 
 ## Flappy Bird/Flappy Dragon 
 Flappy Dragon starts on a black screen. To start the game, simply tap the screen.
