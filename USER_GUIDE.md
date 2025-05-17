@@ -54,7 +54,7 @@ delete them as needed.
 **Created by Priscilla Devadhas**
 
 
-##Team Members 
+## Team Members 
 Aramaea Sewell [Team Leader] 
 Technical: GitHub Management, UI for Tetris, general UI polishing. 
 Contact Information: aramaea.marie@gmail.com 
@@ -80,7 +80,7 @@ Technical: Home page
 Contact Information: 
 
 
-##Technologies Used 
+## Technologies Used 
 ChatGpt 
 
 
