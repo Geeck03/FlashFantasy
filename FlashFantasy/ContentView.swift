@@ -1,32 +1,30 @@
 
 import SwiftUI
 
+//NavigationView connects all aspects of the app 
 
 
-// MARK: - Start Page with Fantasy Vibe (No changes needed)
+
 struct StartPage: View {
     @StateObject private var decksManager = DecksManager()
     
     var body: some View {
         NavigationView {
             ZStack {
-                // Background: use an image named "fantasyBackground" or uncomment the gradient below if you prefer.
                 Image("fantasyBackground")
                     .resizable()
                     .scaledToFill()
                     .ignoresSafeArea()
                     .opacity(0.8)
-                
+        
                 LinearGradient(gradient: Gradient(colors: [Color.purple, Color.black]),
                                startPoint: .top,
                                endPoint: .bottom)
                     .ignoresSafeArea()
                 
-                
                 VStack(spacing: 30) {
                     Spacer()
                     
-                    // Fantasy title
                     Text("Flash Fantasy")
                         .font(.custom("Papyrus", size: 48))
                         .fontWeight(.bold)
@@ -34,7 +32,6 @@ struct StartPage: View {
                         .shadow(color: .black, radius: 5, x: 0, y: 2)
                         .padding(.bottom, 20)
                     
-                    // Navigation buttons with a gradient background
                     NavigationLink(destination: StudyDeckSelectionView(decksManager: decksManager)) {
                         Text("Start Studying")
                             .font(.custom("Papyrus", size: 24))
@@ -104,7 +101,6 @@ struct StartPage: View {
     }
 }
 
-// MARK: - Create Cards View (No changes needed)
 struct CreateCardsView: View {
     @State private var cardName: String = ""
     @State private var cardDescription: String = ""
@@ -189,7 +185,6 @@ struct QuestView: View {
     }
 }
 
-// MARK: - Entry Point and Preview
 struct ContentView: View {
     var body: some View {
         StartPage()
