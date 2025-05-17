@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// MARK: - Note Model
+
 struct Note: Identifiable, Codable {
     let id: UUID
     var title: String
@@ -22,7 +22,7 @@ struct Note: Identifiable, Codable {
     }
 }
 
-// MARK: - Notes ViewModel
+
 class NotesViewModel: ObservableObject {
     @Published var notes: [Note] = [] {
         didSet {
@@ -72,7 +72,7 @@ class NotesViewModel: ObservableObject {
     }
 }
 
-// MARK: - Quest
+
 struct Quest: View {
     @StateObject private var viewModel = NotesViewModel()
     
@@ -116,7 +116,7 @@ struct Quest: View {
     }
 }
 
-// MARK: - NoteDetailView
+
 struct NoteDetailView: View {
     @ObservedObject var viewModel: NotesViewModel
     let note: Note
@@ -163,7 +163,7 @@ struct NoteDetailView: View {
     }
 }
 
-// MARK: - AddEditNoteView
+
 struct AddEditNoteView: View {
     @ObservedObject var viewModel: NotesViewModel
     @Environment(\.presentationMode) var presentationMode
