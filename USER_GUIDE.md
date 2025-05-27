@@ -74,7 +74,11 @@ Macie Hocutt|
 Technical: Home page| Contact Information: 
 
 
-## Technologies Used 
+## Technologies/Resources Used 
 ChatGpt 
+
+"How to Make Flappy Bird With Swift in Xcode (Part 2)." YouTube, uploaded by CodeWithChris, 23 Jan. 2014, https://www.youtube.com/watch?v=aK5APhNYVWA.
+
+"How to Make Flappy Bird With Swift in Xcode (Part 1)." YouTube, uploaded by CodeWithChris, 21 Jan. 2014, https://www.youtube.com/watch?v=Sjh-IV5IamY.
 
 
