@@ -71,7 +71,7 @@ Richard Moerck|
 Technical: Tetris| Contact Information: bmoerck@yahoo.com
 
 Macie Hocutt| 
-Technical: Home page| Contact Information: 
+Technical: Home page| Contact Information: maciehocutt@gmail.com
 
 
 ## Technologies/Resources Used 
